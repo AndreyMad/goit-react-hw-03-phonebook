@@ -16,6 +16,13 @@ class App extends Component {
     filter: ""
   };
 
+  componentDidMount = () => {
+    const contacts = localStorage.getItem("contacts");
+    if (contacts) {
+      this.setState({ contacts: JSON.parse(contacts) });
+    }
+  };
+
   handleFilter = e => {
     this.setState({ filter: e.target.value });
     this.searchFunc();
@@ -32,11 +39,14 @@ class App extends Component {
 
   deleteFunc = e => {
     const idToDelete = e.target.closest("li").dataset.id;
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => {
-        return contact.id !== idToDelete;
-      })
-    }));
+    this.setState(
+      prevState => ({
+        contacts: prevState.contacts.filter(contact => {
+          return contact.id !== idToDelete;
+        })
+      }),
+      localStorage.setItem("contacts", JSON.stringify(this.state.contacts))
+    );
   };
 
   handleSubmit = value => {
@@ -51,6 +61,7 @@ class App extends Component {
         number: value.number
       };
       const newContactsArray = [...contacts, contactFromInput];
+      localStorage.setItem("contacts", JSON.stringify(newContactsArray));
       this.setState({ contacts: newContactsArray });
     } else alert(`${value.name} contact is allready exist`); // eslint-disable-line no-alert
   };
@@ -60,7 +71,7 @@ class App extends Component {
     const filteredValue = this.searchFunc();
     return (
       <>
-        <h1>Phonebook</h1>
+        <h1 style={{ textAlign: "center" }}>Phonebook</h1>
         <Phonebook
           handleSubmit={this.handleSubmit}
           resetForm={this.resetForm}
