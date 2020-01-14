@@ -17,9 +17,24 @@ class App extends Component {
   };
 
   componentDidMount = () => {
-    const contacts = localStorage.getItem("contacts");
-    if (contacts) {
-      this.setState({ contacts: JSON.parse(contacts) });
+    try {
+      const contacts = localStorage.getItem("contacts");
+      if (contacts) {
+        this.setState({ contacts: JSON.parse(contacts) });
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    try {
+      const { contacts } = this.state;
+      if (prevState.contacts !== contacts) {
+        localStorage.setItem("contacts", JSON.stringify(contacts));
+      }
+    } catch (error) {
+      throw new Error(error);
     }
   };
 
@@ -39,14 +54,11 @@ class App extends Component {
 
   deleteFunc = e => {
     const idToDelete = e.target.closest("li").dataset.id;
-    this.setState(
-      prevState => ({
-        contacts: prevState.contacts.filter(contact => {
-          return contact.id !== idToDelete;
-        })
-      }),
-      localStorage.setItem("contacts", JSON.stringify(this.state.contacts))
-    );
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(el => {
+        return el.id !== idToDelete;
+      })
+    }));
   };
 
   handleSubmit = value => {
@@ -61,7 +73,6 @@ class App extends Component {
         number: value.number
       };
       const newContactsArray = [...contacts, contactFromInput];
-      localStorage.setItem("contacts", JSON.stringify(newContactsArray));
       this.setState({ contacts: newContactsArray });
     } else alert(`${value.name} contact is allready exist`); // eslint-disable-line no-alert
   };
