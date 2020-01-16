@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import style from "./Contacts.module.css";
-import Contact from "./Contact";
+import Contact from "./Contact.jsx";
 
 const Contacts = ({ contacts, deleteFunc }) => {
   return (

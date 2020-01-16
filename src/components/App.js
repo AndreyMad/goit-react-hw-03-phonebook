@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import Phonebook from "./Phonebook/Phonebook";
-import Contacts from "./Contacts/Contacts";
-import Filter from "./Filter/Filter";
-
-const keyGenerator = require("uuid/v1");
+import keyGenerator from "uuid/v1";
+import Phonebook from "./Phonebook/Phonebook.jsx";
+import Contacts from "./Contacts/Contacts.jsx";
+import Filter from "./Filter/Filter.jsx";
 
 class App extends Component {
   state = {
