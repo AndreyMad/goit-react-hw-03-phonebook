@@ -22,6 +22,10 @@ class App extends Component {
     }
   };
 
+  componentDidUpdate = () => {
+    localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+  };
+
   handleFilter = e => {
     this.setState({ filter: e.target.value });
     this.searchFunc();
@@ -38,14 +42,11 @@ class App extends Component {
 
   deleteFunc = e => {
     const idToDelete = e.target.closest("li").dataset.id;
-    this.setState(
-      prevState => ({
-        contacts: prevState.contacts.filter(contact => {
-          return contact.id !== idToDelete;
-        })
-      }),
-      localStorage.setItem("contacts", JSON.stringify(this.state.contacts))
-    );
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => {
+        return contact.id !== idToDelete;
+      })
+    }));
   };
 
   handleSubmit = value => {
