@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import style from "./Contacts.module.css";
-import Contact from "./Contact";
+// eslint-disable-next-line import/extensions
+import Contact from "./Contact.jsx";
 
 const Contacts = ({ contacts, deleteFunc }) => (
   <div className={style.wrapper}>
