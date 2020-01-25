@@ -43,7 +43,7 @@ class Phonebook extends Component {
           <input
             onChange={this.handleChangeState}
             value={name}
-            type="input"
+            type="Number"
             name="name"
           />
         </label>
