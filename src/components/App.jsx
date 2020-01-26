@@ -44,13 +44,13 @@ class App extends Component {
 
   handleFilter = e => {
     this.setState({ filter: e.target.value });
-    this.searchFunc();
+    const { contacts, filter } = this.state;
+    this.searchFunc(contacts, filter);
   };
 
-  searchFunc = () => {
-    const { contacts, filter } = this.state;
-    const filteredValue = contacts.filter(el => {
-      return el.name.toLowerCase().includes(filter.toLowerCase());
+  searchFunc = (arrayToFilter, value) => {
+    const filteredValue = arrayToFilter.filter(el => {
+      return el.name.toLowerCase().includes(value.toLowerCase());
     });
 
     return filteredValue;
@@ -81,8 +81,8 @@ class App extends Component {
   };
 
   render() {
-    const { contacts } = this.state;
-    const filteredValue = this.searchFunc();
+    const { contacts, filter } = this.state;
+    const filteredValue = this.searchFunc(contacts, filter);
     return (
       <>
         <h1 style={{ textAlign: "center" }}>Phonebook</h1>
